@@ -1,0 +1,59 @@
+﻿
+<!DOCTYPE html>
+
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="@ViewData["Des"]">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta property="og:type" content="فروشگاه">
+    <meta property="og:title" content="فروشگاه سالینو">
+    <meta property="og:description" content="فروشگاه روسری سالینو">
+    <meta property="og:image" content="http://salinotbz.ir/Content/imgsetting/Group-setting-417767-Group-setting-263669-Layer4.png">
+    <meta property="og:url" content="http://salinotbz.ir">
+    <meta property="og:site_name" content="http://salinotbz.ir">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@ViewBag.Title</title>
+    <link rel="canonical" href="http://salinotbz.ir" />
+
+    <link rel="icon" href="/Content/img/core-img/favicon.ico">
+    <link href="~/Content/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/css/core-style.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link href="~/Content/mdb.min.css" rel="stylesheet" />
+
+
+</head>
+
+    <body class="" style="font-family: IRANSans">
+        <!-----------Style-------------------------->
+        @Html.Partial("_Style")
+
+
+        <!-----------Menu-------------------------->
+        @Html.Action("Menu", "Home")
+
+
+        <!-----------RenderBody-------------------------->
+        <div class="body mt-200">
+            @RenderBody()
+        </div>
+
+
+        <!-----------Footer-------------------------->
+        @Html.Partial("_Footer")
+
+
+        <!-----------Scripts-------------------------->
+        @Html.Partial("_Scripts")
+
+
+        @RenderSection("scripts", false)
+    </body>
+
+</html>

@@ -1,0 +1,24 @@
+﻿@model Salino.Models.ImageOffer
+
+<div class="img5  imgoffer">
+    <a>
+        @if (@Model.SliderTitle != ""&& Model.SliderTitle != null)
+        {
+
+            <h1 style="font-family: IRANSans;"> @Model.SliderTitle</h1>
+        }
+ 
+        <img src="~/Content/imgoffer/@Model.SliderIMG" />
+    </a>
+</div>
+
+<div class="img5  imgoffermobile">
+    <a>
+@if (@Model.SliderTitle != "" && Model.SliderTitle != null)
+{
+
+            <h1 style="font-family: IRANSans;"> @Model.SliderTitle</h1>
+        }
+        <img src="~/Content/imgoffer/@Model.SliderIMGMob" />
+    </a>
+</div>
