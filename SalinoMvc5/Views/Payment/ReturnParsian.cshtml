@@ -4,7 +4,7 @@
 
     ViewBag.Title = "برگشت از خرید";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+   
 }
 
 
@@ -49,7 +49,7 @@
             <tr>
                 <td class="text-center">
                     <img src="~/Content/logo.png" style="background-repeat:no-repeat;height:107px;width:196px;    margin-bottom: 45px;" />
-
+               
 
                 </td>
             </tr>
@@ -57,7 +57,7 @@
             <tr>
                 <td style="border: 1px solid; box-shadow: 0 0 12px 0 black; padding: 12px;text-align: right; background: beige;">
                     <p><span>شماره پیگیری : </span> </p>
-                    <p class="textmessage" style="margin-right: 5px;"> @ViewBag.PaymentNumber </p>
+                    <p class="textmessage" style="margin-right: 5px;"> @ViewBag.PaymentNumber </p>                   
                     <p><span>وضعیت پرداخت :</span></p>
                     <p class="textmessage" style="margin-right: 5px;">@ViewBag.Status   </p>
                     <p><span>شماره مرجع :</span></p>
@@ -70,15 +70,15 @@
                     <p class="alert alert-info">
                         @ViewBag.Message
                     </p>
-                    <a class="btn  btn-info btn-block btn-lg" href="/">
-                        صفحه اصلی سالینو
+                    <a class="btn  btn-dark btn-block btn-lg" href="/">
+                       صفحه اصلی سالینو
                         <i class="fa fa-home"></i>
                     </a>
 
-
+                  
                 </td>
             </tr>
-
+        
         </table>
 
     </div>

@@ -456,7 +456,7 @@
                 if (user.Roles.RoleName == "Admin1")
                 {
                     <div>
-                        . کاربر محترم  <a class="btn " href="/Admin/Default/Index" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: 12px;width: auto;   border-radius: 4px;box-shadow: 0 0 23px 0 #f89821 inset; background-color: #f47022b3;text-decoration: underline;color:white">@user.UserName.ToUpper()</a>   خوش آمدید
+                        . کاربر محترم  <a class="btn " href="/Admin/Default/Index" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: 12px;width: auto;   border-radius: 4px;box-shadow: 0 0 23px 0 #f89821 inset; background-color: #f47022b3;text-decoration: underline;color:white">@user.Mobile</a>   خوش آمدید
                         <a style="background:#f79a46; color: black;box-shadow: 0 0 5px 0 black;    padding: 2px 7px;" href="/User/Signout"><i class="fa fa-sign-out"></i>خروج</a>
                     </div>
 
@@ -465,16 +465,17 @@
                 }
                 if (user.Roles.RoleName == "Admin2")
                 {
-                    <div>
-                        کاربر محترم  <a class="btn " href="/Admin/Default/Index" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: 12px;width: auto;  border-radius: 4px;box-shadow: 0 0 23px 0 #f89821 inset; background-color: #f47022b3;text-decoration: underline;color:white">@user.UserName.ToUpper()</a>   خوش آمدید
+    <div>
+        کاربر محترم  <a class="btn " href="/Admin/Default/Index" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: 12px;width: auto;  border-radius: 4px;box-shadow: 0 0 23px 0 #f89821 inset; background-color: #f47022b3;text-decoration: underline;color:white">@user.Mobile</a>   خوش آمدید
+        <a style="background:#f79a46; color: black;box-shadow: 0 0 5px 0 black;    padding: 2px 7px;" href="/User/Signout"><i class="fa fa-sign-out"></i>خروج</a>
 
 
-                    </div>
+    </div>
                 }
                 if (user.Roles.RoleName == "User1")
                 {
                     <div>
-                        . کاربر محترم  <a class="btn " href="/PanelUser/Index" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: 12px;width: auto;   border-radius: 4px;box-shadow: 0 0 23px 0 #f89821 inset; background-color: #f47022b3;text-decoration: underline;color:white">@user.UserName.ToUpper()</a>   خوش آمدید
+                        . کاربر محترم  <a class="btn " href="/PanelUser/Index" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: 12px;width: auto;   border-radius: 4px;box-shadow: 0 0 23px 0 #f89821 inset; background-color: #f47022b3;text-decoration: underline;color:white">@user.Mobile</a>   خوش آمدید
                         <a style="background:#f79a46; color: black;box-shadow: 0 0 5px 0 black;    padding: 2px 7px;" href="/User/Signout"><i class="fa fa-sign-out"></i>خروج</a>
                  
                      </div>
@@ -483,7 +484,7 @@
                 if (user.Roles.RoleName == "User2")
                 {
                     <div>
-                        . کاربر محترم  <a class="btn " href="/PanelUser/Index" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: 12px;width: auto;   border-radius: 4px;box-shadow: 0 0 23px 0 #f89821 inset; background-color: #f47022b3;text-decoration: underline;color:white">@user.UserName.ToUpper()</a>   خوش آمدید
+                        . کاربر محترم  <a class="btn " href="/PanelUser/Index" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: 12px;width: auto;   border-radius: 4px;box-shadow: 0 0 23px 0 #f89821 inset; background-color: #f47022b3;text-decoration: underline;color:white">@@user.Mobile</a>   خوش آمدید
                         <a style="background:#f79a46; color: black;box-shadow: 0 0 5px 0 black;    padding: 2px 7px;" href="/User/Signout"><i class="fa fa-sign-out"></i>خروج</a>
                       
                       </div>
@@ -513,13 +514,14 @@
     <div class="header-meta d-flex clearfix justify-content-end">
 
         <!--Strat Search Top Menu-->
-        <form method="post" action="/Product/Search/" id="content">
+        <form method="post" action="/Product/ListProducts" id="content">
             <div class=" ">
                 <div class="d-flex justify-content-center " style="width: 47px;">
                     <div class="searchbar">
                         <div class="search-wrapper">
                             <div class="input-holder">
-                                <input type="text" name="search" class="search-input" placeholder="Type to search" />
+                                <input type="text" name="search_CodeKala" class="search-input" placeholder="Type to search" />
+                                <input type="text" name="groupId" value="0" hidden />
                                 @*<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>*@
                                 <button onclick="searchToggle(this, event);" class="search-icon" type="submit" style="border: none;position: absolute;" class="search_icon">
                                     <img src="~/Content/img/Layer3.png" alt="" style="height: 35px; width: 35px;">
@@ -560,10 +562,10 @@
                             </li>
 
                             <li>
-                                <a class="btn btn-primary" href="~/User/login" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: small;width: auto;border-radius:0px">ورود </a>
+                                <a class="btn btn-primary" href="~/User/login" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: small;width: auto;border-radius:0px;color:white!important">ورود </a>
                             </li>
                             <li>
-                                <a class="btn btn-primary" href="~/User/RegisterDisposable" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: small;width: auto;border-radius:0px">ثبت نام </a>
+                                <a class="btn btn-primary" href="~/User/RegisterDisposable" style="background: none;box-shadow: none; line-height: normal; top: 0px; padding: -8px; font-size: small;width: auto;border-radius:0px;color:white!important">ثبت نام </a>
                             </li>
                          
 

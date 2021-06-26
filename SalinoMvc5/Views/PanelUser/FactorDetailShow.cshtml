@@ -44,15 +44,21 @@
                     </section>
 
                     <section class="content  ">
-
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="alert alert-danger text-center">
+                                    مشتری گرامی درهنگام ویرایش آدرس دقت فرمایید  آدرسی که برای فاکتور قبلی درج شده قابل ویرایش نمی باشد
+                                </p>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="box box box-info">
                                     <div class="box-header">
-                                        <h3 class="box-title"style="text-align:center;margin-bottom:20px;font-family: IRANSans;">     جزئیات فاکتور @ViewBag.ShomareFactor </h3>
+                                        <h3 class="box-title" style="text-align:center;margin-bottom:20px;font-family: IRANSans;">     جزئیات فاکتور @ViewBag.ShomareFactor </h3>
 
                                         <div class="box-tools">
-                                        
+
                                         </div>
 
                                     </div>
@@ -63,26 +69,29 @@
                                                 <tr>
                                                     <th>شماره</th>
                                                     <th>
-وضعیت پرداخت   
+                                                        وضعیت پرداخت
                                                     </th>
                                                     <th>
                                                         کدکالا
                                                     </th>
                                                     <th>
-                                                     نام محصول
+                                                        گروه
+                                                    </th>
+                                                    <th>
+                                                        نام محصول
                                                     </th>
 
                                                     <th>
-                                                     جنس
+                                                        جنس
                                                     </th>
                                                     <th>
-                                                 تعداد
+                                                        تعداد
                                                     </th>
                                                     <th>
-                                                  قیمت واحد
+                                                        قیمت واحد
                                                     </th>
                                                     <th>
-                                                   قیمت کل
+                                                        قیمت کل
                                                     </th>
                                                 </tr>
                                                 @foreach (var item in Model)
@@ -103,6 +112,9 @@
                                                             @db.Products.Find(item.ProductId).CodeKala
                                                         </td>
                                                         <td>
+                                                            @db.groupProducts.Where(x => x.Id == item.Product.GroupId).FirstOrDefault().GroupTitle
+                                                        </td>
+                                                        <td>
                                                             @Html.DisplayFor(modelItem => item.ProductName)
                                                         </td>
 
@@ -118,14 +130,14 @@
                                                         <td>
                                                             @item.SumPrice.ToString("#,0تومان")
                                                         </td>
-                                                
+
 
                                                     </tr>
                                                     counter++;
                                                 }
 
                                             </tbody>
-                                         
+
                                         </table>
                                         <div class="container">
                                             @Html.PagedListPager(Model, page => Url.Action("FactorDetailShow", new { page }))

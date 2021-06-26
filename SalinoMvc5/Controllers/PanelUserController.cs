@@ -22,6 +22,10 @@ namespace SalinoMvc5.Controllers
             return View();
         }
 
+
+
+
+
         #region Information
 
         public ActionResult PersonalInformation()
@@ -36,8 +40,9 @@ namespace SalinoMvc5.Controllers
             }
 
         }
-        public ActionResult EditPersonalInformation()
+        public ActionResult EditPersonalInformation( int typePage = 0)
         {
+            ViewBag.typePage = typePage;
             if (User.Identity.IsAuthenticated)
             {
                 return View(db.users.Where(x => x.Mobile == User.Identity.Name).FirstOrDefault());
@@ -49,7 +54,7 @@ namespace SalinoMvc5.Controllers
 
         }
         [HttpPost]
-        public ActionResult EditPersonalInformation(User user)
+        public ActionResult EditPersonalInformation(User user,int typePage=0)
         {
             if (user != null)
             {
@@ -65,12 +70,11 @@ namespace SalinoMvc5.Controllers
 
 
 
-                string pass = user.UserPassword.ToHashPassword();
                 var userresult = db.users.Where(x => x.Id == user.Id).FirstOrDefault();
-
+                userresult.CodeActivate = RandomNumber.RandomMake().ToString();
                 userresult.cityname = user.cityname;
                 userresult.ostanname = user.ostanname;
-                userresult.OstanId = user.OstanId;
+                userresult.OstanId =Convert.ToInt32( user.ostanname);
                 userresult.CodeActivate = RandomNumber.RandomMake().ToString();
                 userresult.UserPassword = user.UserPassword;
                 userresult.Createdate = user.Createdate;
@@ -81,13 +85,17 @@ namespace SalinoMvc5.Controllers
                 userresult.Mobile = user.Mobile;
                 userresult.PostalCode = user.PostalCode;
                 userresult.UserName = user.UserName;
-                userresult.UserPassword = pass;
+     
                 db.Entry(userresult).State = EntityState.Modified;
                 db.SaveChanges();
+                if(typePage==1)
+                return Redirect("/Product/ShopCart");
                 return RedirectToAction("PersonalInformation");
             }
             return View();
         }
+
+
         public ActionResult ChangePassword()
         {
             return View();

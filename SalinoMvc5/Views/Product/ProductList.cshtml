@@ -1,57 +1,19 @@
-﻿
-
-
-@model PagedList.IPagedList<Salino.Models.Product>
-@using PagedList.Mvc
-
-@*@model List<Salino.Models.Product>*@
+﻿@model List<  Salino.Models.Product>
 @using Salino.DataLayer;
 @{
-
+ 
     int counter = 1;
     SalinoContext db = new SalinoContext();
     int proid = 0;
 }
-<style>
-    .groupname {
-        height: 35px;
-        width: 80px;
-        background-color: black;
-        float: left;
-        margin-left: -80px;
-        margin-top: -53px;
-        text-align: center;
-        color: white;
-        padding: 5px;
-        color: white;
-        text-align: right;
-    }
-
-    @@media screen and (max-width: 769px) {
-        .groupname {
-            height: 19px;
-            width: 29px;
-            background-color: #212529;
-            float: left;
-            margin-left: 54px;
-            margin-top: -84px;
-            text-align: center;
-            color: white;
-            /* FONT-SIZE: xx-small; */
-            TEXT-ALIGN: right;
-            font-size: 7px;
-        }
-    }
-</style>
-<div class="container" id="listproduct">
-    <div class="row " style="justify-content:center">
+<div class="container" id="listpro">
+    <div class="row prolistitem" style=" justify-content: center!important; ">
         @foreach (var item in Model)
         {
             <div class="col-md-4 col-lg-4 col-4 productDesktop " style="margin-top:20px;cursor: pointer; ">
 
                 <a href="/Product/DetailProduct/@item.Id">
                     <img class="left" src="~/Content/imgpro/@item.ImgMain" />
-                    @*<img class="left" src="~/Content/img/images.jpg" />*@
                 </a>
 
 
@@ -60,27 +22,12 @@
                         کد  : @item.CodeKala
                     </div>
                     <div class="pricemeleft">
-                        @if (db.FarbicTypeProducts.Where(x => x.ProductId == item.Id).FirstOrDefault() != null)
-                        {
-                            <span>   قیمت   :</span>
-                            @db.FarbicTypeProducts.Where(x => x.ProductId == item.Id).FirstOrDefault().FarbicTypes.PriceMain.ToString("#,0")
-
-                        }
-                        else
-                        {
-                            <span>ناموجود</span>
-                        }
-
-                    </div>
-                    <div class="groupname">
-                        <span>
-                            @item.GroupProduct.GroupTitle
-                        </span>
+                        قیمت  : @db.FarbicTypeProducts.Where(x => x.ProductId == item.Id).FirstOrDefault().FarbicTypes.PriceMain.ToString("#,0")
+                  
                     </div>
                 </div>
             </div>
-
-            <div @*v-on:click="MoveTodetail(@item.Id)"*@ onclick="window.location.href='/Product/DetailProduct/'+@item.Id" class="col-md-4  col-lg-4 col-4  productMobile " style="margin-top:15px; background-image: url('/Content/imgpro/@item.ImgMainMob');cursor: pointer; ">
+            <div v-on:click="MoveTodetail(@item.Id)" class="col-md-4  col-lg-4 col-4  productMobile " style="margin-top:15px; background-image: url('/Content/imgpro/@item.ImgMainMob');cursor: pointer; ">
                 <a href="/Product/DetailProduct/@item.Id">
                     <div class="pricecode">
 
@@ -88,31 +35,36 @@
                             کد  : @item.CodeKala
                         </div>
                         <div class="pricemeleft">
-                            @if (db.FarbicTypeProducts.Where(x => x.ProductId == item.Id).FirstOrDefault() != null)
-                            {
-                                <span>   قیمت   :</span>
-                                @db.FarbicTypeProducts.Where(x => x.ProductId == item.Id).FirstOrDefault().FarbicTypes.PriceMain.ToString("#,0")
-
-                            }
-                            else
-                            {
-                                <span>ناموجود</span>
-                            }
-
-                        </div>
-                        <div class="groupname">
-                            <span>
-                                @item.GroupProduct.GroupTitle
-                            </span>
+                            قیمت  : @db.FarbicTypeProducts.Where(x => x.ProductId == item.Id).FirstOrDefault().FarbicTypes.PriceMain.ToString("#,0")
                         </div>
                     </div>
-                </a>
-            </div>
+                    </a>
+
+</div>
 
             proid = item.Id;
         }
     </div>
 
 
-</div>
+    @*<div v-for="(pro,key) in product" :key="key" class="col-md-4 col-lg-4 col-4 productDesktop " style="margin-top:20px;cursor: pointer; ">
 
+            <a >
+                <img class="left"  :src="'/Content/imgpro/'+pro.ImgMain"/>
+            </a>
+
+
+
+
+            <div class="pricecode">
+                <div class="codemeleft">
+                    کد  : {{pro.CodeKala}}
+
+                </div>
+                <div class="pricemeleft">
+                    قیمت  : @db.FarbicTypeProducts.Where(x => x.ProductId == pro.Id).FirstOrDefault().FarbicTypes.PriceMain.ToString("#,0")
+                </div>
+
+            </div>
+        </div>*@
+</div>

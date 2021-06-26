@@ -57,9 +57,9 @@
         </ol>
     </nav>
     <h1 style="text-align:center;font-family: IRANSans;">سبدخرید</h1>
-    @if (db.OfferPrices.Count() > 1)
+ @if (db.OfferPrices.Count() >1)
     {
-        <div class="row " dir="rtl">
+        <div class="row "dir="rtl">
             <div class="col-md-12">
                 <p class="alert alert-info text-center text-red">
                     <i class="fa fa-gift"></i>
@@ -85,40 +85,10 @@
                     <i class="fa fa-gift"></i>
                 </p>
             </div>
-
+        
         </div>
     }
-    @if (db.SendPrices.Count() > 1)
-    {
-        <div class="row " dir="rtl">
-            <div class="col-md-12">
-                <p class="alert alert-info text-center text-red">
-                    <i class="fa fa-gift"></i>
-                    <span>
-                        اگر تعداد جنس انتخاب شده از
-                    </span>
-                    <span>
-                        <b>
-                            @((db.SendPrices.FirstOrDefault(x=>x.AsNumber!=0).AsNumber) -1) عدد
-                        </b>
-                    </span>
-                    <span>
-                        بیشتر باشد هزینه ارسال
-                    </span>
-                    <span>
-                        <b>
-                           رایگان
-                        </b>
-                    </span>
-                    <span>
-                      خواهد شد.
-                    </span>
-                    <i class="fa fa-gift"></i>
-                </p>
-            </div>
 
-        </div>
-    }
     <div class="DetailProduct" id="detailpro">
 
 
@@ -241,28 +211,28 @@
                                 }
                                 else
                                 {
-                                    <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
-                                            v-on:change="ChangePriceSenTyprprice(this.value)">
-                                        <option disabled value="">انتخاب کنید....</option>
-                                        @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
-                                        {
-                                            <option value="@item.Id">@item.NameHaml</option>
-                                        }
-                                    </select>
+                        <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
+                                v-on:change="ChangePriceSenTyprprice(this.value)">
+                            <option disabled value="">انتخاب کنید....</option>
+                            @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
+                            {
+                                <option value="@item.Id">@item.NameHaml</option>
+                            }
+                        </select>
 
                                 }
                             }
                             else
                             {
-                                <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
-                                        v-on:change="ChangePriceSenTyprprice(this.value)">
+                        <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
+                                v-on:change="ChangePriceSenTyprprice(this.value)">
 
-                                    <option disabled value="">انتخاب کنید....</option>
-                                    @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
-                                    {
-                                        <option value="@item.Id">@item.NameHaml</option>
-                                    }
-                                </select>
+                            <option disabled value="">انتخاب کنید....</option>
+                            @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
+                            {
+                                <option value="@item.Id">@item.NameHaml</option>
+                            }
+                        </select>
                             }
 
 
@@ -332,7 +302,7 @@
                                     var user = db.users.Where(x => x.Mobile == mobile).FirstOrDefault();
                                     if (user.StreetAddress == null || user.UserName == null)
                                     {
-                                        <a href="/PanelUser/EditPersonalInformation?OfShopCart=1" id="btnrefresh" class="cart-button" style="font-size: medium;font-family: IRANSans;    direction: rtl;">   <i class="fa fa-sign-in"></i>تکمیل اطلاعات کاربری </a>
+                                        <a href="/PanelUser/EditPersonalInformation?OfShopCart=1"  id="btnrefresh" class="cart-button" style="font-size: medium;font-family: IRANSans;    direction: rtl;">   <i class="fa fa-sign-in"></i>تکمیل اطلاعات کاربری </a>
 
                                     }
                                     else
@@ -367,68 +337,68 @@
                 <ul>
                     @foreach (var item in Model)
                     {
-                        <li class="cart-item" style="background: #f8f9fa;color: black; height: 158px;">
+                    <li class="cart-item" style="background: #f8f9fa;color: black; height: 158px;">
 
 
-                            @*تصویر*@
-                            <span class="cart-item-pic" style="margin-right: -72px;">
-                                <img src="/Content/imgpro/@item.Imgpath">
-                            </span>
+                        @*تصویر*@
+                        <span class="cart-item-pic" style="margin-right: -72px;">
+                            <img src="/Content/imgpro/@item.Imgpath">
+                        </span>
 
-                            @*عنوان وکد دکالا*@
-                            <p style="text-align:right;font-size: 11px;">
-                                @db.groupProducts.Find(item.GroupId).GroupTitle
-                                -
-                                @db.Products.Find(item.ProductID).CodeKala
-                            </p>
+                        @*عنوان وکد دکالا*@
+                        <p style="text-align:right;font-size: 11px;">
+                            @db.groupProducts.Find(item.GroupId).GroupTitle
+                            -
+                            @db.Products.Find(item.ProductID).CodeKala
+                        </p>
 
-                            @* وجنس*@
-                            <p>
-                                @db.FarbicTypes.Find(item.FarbictypeId).tiltle
-                            </p>
+                        @* وجنس*@
+                        <p>
+                            @db.FarbicTypes.Find(item.FarbictypeId).tiltle
+                        </p>
 
 
 
-                            <div class="cart-item-desc" style="margin-top: 3px;">
+                        <div class="cart-item-desc" style="margin-top: 3px;">
 
-                                @*تعداد*@
-                                <div style="color: black;  margin-left: -89px;">
-                                    @*<input style="font-size: initial;text-align:center; box-shadow: 0 0 12px 0 #ccc; margin-top: 17px;width:50px;    width: 31px;
-                                        height: 25px;    margin-left: 157px;"
-                                              type="number" class="form-control text-center" value="@item.Count" min="1" name="Count">*@
-                                    <form action="/Product/RefreshShopCart">
-                                        <input style="font-size: initial;text-align:center; box-shadow: 0 0 12px 0 #ccc; margin-top: 17px;width:77px;
+                            @*تعداد*@
+                            <div style="color: black;  margin-left: -89px;">
+                                @*<input style="font-size: initial;text-align:center; box-shadow: 0 0 12px 0 #ccc; margin-top: 17px;width:50px;    width: 31px;
+                height: 25px;    margin-left: 157px;"
+                      type="number" class="form-control text-center" value="@item.Count" min="1" name="Count">*@
+                                <form action="/Product/RefreshShopCart">
+                                    <input style="font-size: initial;text-align:center; box-shadow: 0 0 12px 0 #ccc; margin-top: 17px;width:77px;
                                                 height: 25px;margin-left:220px;"
-                                               type="number" class="form-control text-center" value="@item.Count" min="1" name="Count">
+                                           type="number" class="form-control text-center" value="@item.Count" min="1" name="Count">
 
-                                        <input hidden value="@item.CodeKala" name="CodeKala" />
-                                        <input hidden value="@item.FarbictypeId" name="FarbictypeId" />
-                                        <input hidden value="@item.FarbicTypeProductId" name="FarbicTypeProductId" />
-                                        <input hidden value="@item.GroupId" name="GroupId" />
-                                        <input hidden value="@item.Farbictypeprice" name="Farbictypeprice" />
-                                        <input hidden value="@item.ProductID" name="productId" />
-                                        <input hidden value="@item.sumproduct" name="sumproduct" />
-                                        <button type="submit" class="" style="width: 44px; background: none; border: none;cursor:pointer;margin-top: 5px;color: black;margin-left: 232px;">
-                                            <i class="fa fa-refresh" style="font-size:14px"></i>
-                                        </button>
+                                    <input hidden value="@item.CodeKala" name="CodeKala" />
+                                    <input hidden value="@item.FarbictypeId" name="FarbictypeId" />
+                                    <input hidden value="@item.FarbicTypeProductId" name="FarbicTypeProductId" />
+                                    <input hidden value="@item.GroupId" name="GroupId" />
+                                    <input hidden value="@item.Farbictypeprice" name="Farbictypeprice" />
+                                    <input hidden value="@item.ProductID" name="productId" />
+                                    <input hidden value="@item.sumproduct" name="sumproduct" />
+                                    <button type="submit" class="" style="width: 44px; background: none; border: none;cursor:pointer;margin-top: 5px;color: black;margin-left: 232px;">
+                                        <i class="fa fa-refresh" style="font-size:14px"></i>
+                                    </button>
 
-                                    </form>
+                                </form>
 
-                                </div>
-                                @*قیمت*@
-                                <p style="margin-top: -71px;">
-                                    @db.FarbicTypes.Find(item.FarbictypeId).PriceMain.ToString(" #,0 تومان")
-                                </p>
                             </div>
+                            @*قیمت*@
+                            <p style="margin-top: -71px;">
+                                @db.FarbicTypes.Find(item.FarbictypeId).PriceMain.ToString(" #,0 تومان")
+                            </p>
+                        </div>
 
 
-                            @*جمع کالا*@
-                            <span class="cart-item-price" style="color: black;right: 136px; margin-top: -17px;  padding: 5px;
+                        @*جمع کالا*@
+                        <span class="cart-item-price" style="color: black;right: 136px; margin-top: -17px;  padding: 5px;
                                 box-shadow: 0 0 5px 0 black;">
-                                جمع  :    @item.sumproduct.ToString(" #,0 تومان")
-                            </span>
-                            <a href="/Product/DeleteFromShopCart/@item.FarbicTypeProductId" class="btn btn-danger btnrefresh"
-                               style="        font-size: medium;
+                            جمع  :    @item.sumproduct.ToString(" #,0 تومان")
+                        </span>
+                        <a href="/Product/DeleteFromShopCart/@item.FarbicTypeProductId" class="btn btn-danger btnrefresh"
+                           style="        font-size: medium;
         font-family: IRANSans;
         border-radius: 11px;
         border: 1px solid #212529;
@@ -436,11 +406,11 @@
         float: right;
         margin-right: -76px;
 ">
-                                حذف
-                                <i class="fa fa-remove"></i>
-                            </a>
+                            حذف
+                            <i class="fa fa-remove"></i>
+                        </a>
 
-                        </li>
+                    </li>
                     }
                 </ul>
 
@@ -459,30 +429,30 @@
                         }
                         else
                         {
-                            <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
-                                    v-on:change="ChangePriceSenTyprprice(this.value)">
-                                <option disabled value="">انتخاب کنید....</option>
-                                @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
-                                {
-                                    <option value="@item.Id">@item.NameHaml</option>
-                                }
-                            </select>
-
+                <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
+                        v-on:change="ChangePriceSenTyprprice(this.value)">
+                    <option disabled value="">انتخاب کنید....</option>
+                    @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
+                    {
+                        <option value="@item.Id">@item.NameHaml</option>
+                    }
+                </select>
+                         
 
                         }
                     }
                     else
                     {
-                        <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
-                                v-on:change="ChangePriceSenTyprprice(this.value)">
-                            <option disabled value="">انتخاب کنید....</option>
-                            @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
-                            {
-                                <option value="@item.Id">@item.NameHaml</option>
-                            }
-                        </select>
+                <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
+                        v-on:change="ChangePriceSenTyprprice(this.value)">
+                    <option disabled value="">انتخاب کنید....</option>
+                    @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
+                    {
+                        <option value="@item.Id">@item.NameHaml</option>
+                    }
+                </select>
 
-
+                        
                     }
 
 
@@ -534,33 +504,33 @@
 
                     @*<a href="#" class="cart-button">Continue</a>*@
 
-                    <form action="/Payment/Payment">
-                        <input hidden v-model="SumAllPrices" value="SumAllPrices" name="sumAllPrices">
-                        <input hidden value="@countProduct" name="countProduct">
-                        <input hidden v-model="gifcartinput" value="gifcartinput" name="gifcart">
-                        <input hidden v-model="sendtypeId" value="sendtypeId" name="sendtypeId">
+                <form action="/Payment/Payment">
+                    <input hidden v-model="SumAllPrices" value="SumAllPrices" name="sumAllPrices">
+                    <input hidden value="@countProduct" name="countProduct">
+                    <input hidden v-model="gifcartinput" value="gifcartinput" name="gifcart">
+                    <input hidden v-model="sendtypeId" value="sendtypeId" name="sendtypeId">
 
-                        @if (User.Identity.IsAuthenticated && Session["shopcart"] != null)
+                    @if (User.Identity.IsAuthenticated && Session["shopcart"] != null)
+                    {
+                        var mobile = User.Identity.Name.ToString();
+                        var user = db.users.Where(x => x.Mobile == mobile).FirstOrDefault();
+                        if (user.StreetAddress == null || user.UserName == null )
                         {
-                            var mobile = User.Identity.Name.ToString();
-                            var user = db.users.Where(x => x.Mobile == mobile).FirstOrDefault();
-                            if (user.StreetAddress == null || user.UserName == null)
-                            {
-                                <a href="/PanelUser/EditPersonalInformation?OfShopCart=1" id="btnrefresh" class="cart-button" style="font-size: medium;font-family: IRANSans;    direction: rtl;">   <i class="fa fa-sign-in"></i>تکمیل اطلاعات کاربری </a>
+                <a href="/PanelUser/EditPersonalInformation?OfShopCart=1" id="btnrefresh" class="cart-button" style="font-size: medium;font-family: IRANSans;    direction: rtl;">   <i class="fa fa-sign-in"></i>تکمیل اطلاعات کاربری </a>
 
-                            }
-                            else
-                            {
-                                <button v-bind:disabled="isDisabled" type="submit" id="btnrefresh" class="btn btn-info btn-block btnrefresh" style="font-size: medium;font-family: IRANSans;"> ثبت نهایی  <i class="fa fa-angle-double-left"></i></button>
-
-                            }
                         }
                         else
                         {
-                            <a href="/User/RegisterDisposable" id="btnrefresh" class="cart-button" style="font-size: medium;font-family: IRANSans;    direction: rtl;">   <i class="fa fa-sign-in"></i>ابتداوارد شوید </a>
-                        }
+                            <button v-bind:disabled="isDisabled" type="submit" id="btnrefresh" class="btn btn-info btn-block btnrefresh" style="font-size: medium;font-family: IRANSans;"> ثبت نهایی  <i class="fa fa-angle-double-left"></i></button>
 
-                    </form>
+                        }
+                    }
+                    else
+                    {
+                        <a href="/User/RegisterDisposable" id="btnrefresh" class="cart-button" style="font-size: medium;font-family: IRANSans;    direction: rtl;">   <i class="fa fa-sign-in"></i>ابتداوارد شوید </a>
+                    }
+
+                </form>
                     <p class="text-center text-danger bg-info"> {{msgisDisabled}}</p>
                 </div>
             </div>

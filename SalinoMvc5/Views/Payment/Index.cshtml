@@ -22,7 +22,7 @@
                     <li class="breadcrumb-item"><a href="/Product/Majorshopping">سبدخرید</a></li>
                 }
 
-
+       
                 <li class="breadcrumb-item active" aria-current="page" style="color: #212529;">تایید نهایی سفارشات</li>
                 <li class="breadcrumb-item active" aria-current="page" style="color: #212529;">پرداخت</li>
             </ol>
@@ -31,7 +31,7 @@
             <div align="center">
             </div>
             <table class="tbl" style="font-family:IRANSans; margin:auto auto">
-
+          
 
                 <tr>
                     <td>
@@ -40,7 +40,7 @@
                             @(ViewBag.Redirect??"")
                             @(ViewBag.Redirect1??"")
                         </p>
-
+                       
                     </td>
                 </tr>
 
@@ -50,43 +50,43 @@
                             int price = Convert.ToInt32(ViewBag.sum);
                             TempData["PriceAll"] = price;
                         }
-                        <input hidden value="@price" name="price" id="price" />
+                        <input hidden value="@price"name="price"id="price"/>
                         <p style="margin-top:50px;font-size:21px;border:1px solid;text-align:center;padding: 8px;
                             border-radius: 13px; background-color: cornsilk;">مبلغ پرداختی  :@price.ToString("#,0 تومان") </p>
 
-                        </td>
+                    </td>
+               
 
+                </tr>
+            
+                <tr>
+                    <td style="font-family:IRANSans; ">
+                        <div class="row">
+                        <input hidden value="0" name="typeBank"/>
+                            <div class="col-12" style="box-shadow:0 0 5px 0 black;font-size:13px;border-radius: 7px;">
 
-                    </tr>
-
-                    <tr>
-                        <td style="font-family:IRANSans; ">
-                            <div class="row">
+                                <img src="~/Content/logo.png" style="width: 186px;height: 135px;padding: 20px;text-align:center"/>
+                                <p>
+                                    بانک پارسیان :  <input type="radio" name="typeBank" value="1" />
+                                </p> 
                               
-                                <div class="col-12" style="box-shadow:0 0 5px 0 black;font-size:13px;border-radius: 7px;">
-
-                                    <img src="~/Content/logo.png" style="width: 186px;height: 135px;padding: 20px;text-align:center" />
-                                    <p>
-                                        بانک پارسیان :  <input type="radio" name="typeBank" value="2" />
-                                    </p>
-                                  
-                                </div>
-                                <div class="col-2">
-
-                                </div>
+                            </div>
+                            <div class="col-2">
 
                             </div>
+             
+                        </div>
+                    
 
-
-                        </td>
-                    </tr>
-                </table>
-                <input style="margin-top:50px;font-size:20px;" class="btn btn-success btn-block" type="submit" value="پرداخت" />
-
-            </div>
+                    </td>
+                </tr>
+            </table>
+            <input style="margin-top:50px;font-size:20px;" class="btn btn-success btn-block" type="submit" value="پرداخت" />
+        
         </div>
+    </div>
 
+   
 
-
-    }
+ }
 

@@ -17,37 +17,21 @@
         <hr />
         <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
         <div class="owl-carousel testimonial-carousel">
-            @foreach (var item in db.Products)
+            @if (db.Products.Count() != 0)
             {
-                @*<div class="single-testimonial">
-                        <div class="testimonials-wrapper">
-                            <a href="/Product/DetailProduct/@item.Id">
-                                <div class="testimonials-blob"></div>
-                                <div class="testimonials-img"><img src="~/Content/imgpro/@item.ImgMain"> </div>
-                                <div class="testimonials-person-info">
-                                    <p><b>@item.CodeKala</b><br />@item.GroupProduct.GroupTitle</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>*@
-                <div class="single-testimonial" style="margin: 15px;">
+                foreach (var item in db.Products.OrderByDescending(x => x.CreateDateEnglish).Take(12).ToList())
+                {
+           
+                <div class="single-testimonial" style="margin: 15px;"onclick="window.location.href='/Product/DetailProduct/'+@item.Id">
                     <img src="~/Content/imgpro/@item.ImgMain">
                     <div class="testimonials-person-info">
                         <p><b>@item.CodeKala</b><br />@item.GroupProduct.GroupTitle</p>
                     </div>
-                    @*<div class="testimonials-wrapper">
-                            <a href="/Product/DetailProduct/@item.Id">
-                                <div class="testimonials-blob"></div>
-                                <div class="testimonials-img"><img src="~/Content/imgpro/@item.ImgMain"> </div>
-                                <div class="testimonials-person-info">
-                                    <p><b>@item.CodeKala</b><br />@item.GroupProduct.GroupTitle</p>
-                                </div>
-                            </a>
-                        </div>*@
+                
                 </div>
+                }
+
             }
-
-
         </div>
     </div>
 
@@ -67,47 +51,30 @@
         <hr />
         <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
         <div class="owl-carousel testimonial-carousel">
-            @foreach (var item in db.Products.OrderByDescending(x => x.CreateDateEnglish).Take(12).ToList())
+            @if (db.Products.Count() != 0)
             {
-                @*<div class="single-testimonial">
-                      <img src="~/Content/imgpro/@item.ImgMain">
-                        <div class="testimonials-wrapper">
-                            <a href="/Product/DetailProduct/@item.Id">
-                                <div class="testimonials-blob"></div>
-                                <div class="testimonials-img"><img src="~/Content/imgpro/@item.ImgMain"> </div>
-                                <div class="testimonials-person-info">
-                                    <p><b>@item.CodeKala</b><br />@item.GroupProduct.GroupTitle</p>
-                                </div>
-                            </a>
+                foreach (var item in db.Products.OrderByDescending(x => x.CreateDateEnglish).Take(12).ToList())
+                {
+                    
+                    <div class="single-testimonial" style="margin: 15px;"onclick="window.location.href='/Product/DetailProduct/'+@item.Id">
+                        <img src="~/Content/imgpro/@item.ImgMain">
+                        <div class="testimonials-person-info">
+
+                            <p>
+                                <b>@item.CodeKala</b><br />
+
+                                @item.GroupProduct.GroupTitle
+
+                            </p>
+
                         </div>
-                    </div>*@
-                <div class="single-testimonial" style="margin: 15px;">
-                    <img src="~/Content/imgpro/@item.ImgMain">
-                    <div class="testimonials-person-info">
-
-                        <p>
-                            <b>@item.CodeKala</b><br />
-
-                            @item.GroupProduct.GroupTitle
-
-                        </p>
-
+                    
                     </div>
-                    @*<div class="testimonials-wrapper">
-                            <a href="/Product/DetailProduct/@item.Id">
-                                <div class="testimonials-blob"></div>
-                                <div class="testimonials-img"><img src="~/Content/imgpro/@item.ImgMain"> </div>
-                                <div class="testimonials-person-info">
-                                    <p><b>@item.CodeKala</b><br />@item.GroupProduct.GroupTitle</p>
-                                </div>
-                            </a>
-                        </div>*@
-                </div>
 
+                }
             }
 
-
-        </div>
+            </div>
     </div>
 
 </div>

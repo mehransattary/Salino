@@ -8755,6 +8755,9 @@
     <Content Include="Views\Product\DetailProductFormModel.cshtml" />
     <Content Include="Views\User\RegisterDisposable.cshtml" />
     <Content Include="Views\User\loginDisposable.cshtml" />
+    <Content Include="Views\PanelUser\DetailFactorMain.cshtml" />
+    <Content Include="Views\Shared\_loading.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
     <None Include="Web References\ir.shaparak.pec\SaleService.wsdl" />
   </ItemGroup>
   <ItemGroup>

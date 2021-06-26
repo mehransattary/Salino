@@ -27,6 +27,14 @@ namespace SalinoMvc5.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var user = db.users.Where(x => x.Mobile == User.Identity.Name).FirstOrDefault();
+                ViewBag.NotCompleteUser = 0;
+                if (!String.IsNullOrEmpty(user.UserName)&&
+                    !String.IsNullOrEmpty(user.PostalCode)&&
+                    !String.IsNullOrEmpty(user.StreetAddress)&&
+                     !String.IsNullOrEmpty(user.cityname) )                   
+                {
+                    ViewBag.NotCompleteUser = 1;
+                }
                 if (gifcart != "" && gifcart != "0" && gifcart != null)
                 {
                     ViewBag.gifcart = gifcart;

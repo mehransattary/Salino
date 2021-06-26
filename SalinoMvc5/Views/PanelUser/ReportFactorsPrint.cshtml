@@ -80,12 +80,14 @@
                     <address>
                         <strong>خریدار</strong><br>
                         نام خریدار :  @db.users.Where(x => x.Id == factorMain.UserId).FirstOrDefault().UserName <br>
-                        موبایل :  @factorMain.UserMobile <br>
                         خیابان :  @factorMain.AddressUser <br>
-                      
-                        صندوق پستی: @factorMain.UserCodePosti <br>
-                        استان: @factorMain.UserOstan <br>
-                        شهر: @factorMain.UserCity <br>
+                        تلفن: @factorMain.UserMobile <br>
+
+
+                        صندوق پستی: @db.users.Where(x => x.Id == factorMain.UserId).FirstOrDefault().PostalCode
+
+
+
 
                     </address>
 

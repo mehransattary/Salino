@@ -1,5 +1,4 @@
-﻿
-@*@model  List<Salino.Models.Product>*@
+﻿@*@model  List<Salino.Models.Product>*@
 @model PagedList.IPagedList<Salino.Models.Product>
 @using PagedList.Mvc
 @using Salino.DataLayer;
@@ -7,8 +6,8 @@
     ViewBag.Title = "ShowProducts";
     Layout = "~/Views/Shared/_Layout.cshtml";
     SalinoContext db = new SalinoContext();
-    int countProducts = (int)ViewBag.CountProducts;
-    int pagecurrent = (int)ViewBag.pagecurrent;
+    int countProducts =(int) ViewBag.CountProducts;
+    int pagecurrent =(int) ViewBag.pagecurrent;
     pagecurrent++;
     int groupId = ViewBag.groupId ?? 0;
     //var loadInfoUrl = Url.Action(actionName: "ShowInfoProducts", controllerName: "Product");
@@ -27,9 +26,8 @@
             width: 40%;
             box-shadow: 0 0 10px 0 black;
         }
-
     .pagination {
-        display: block !important;
+        display:block!important;
     }
 </style>
 @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
@@ -62,7 +60,7 @@
 
                         <input type="text" class="inputcode" name="search_CodeKala" />
                         <input type="text" hidden name="Id" value="@groupId" />
-
+                   
                         <button v-on:click="ChangePriceGifCart()" type="submit" class="btnsearchListProduct" style="width: 44px; background: none; border: none;cursor:pointer;    margin-top: 2px;">
                             <i class="fa fa-search" style="font-size:14px"></i>
                         </button>
@@ -116,13 +114,12 @@
              Model,
              page => Url.Action("ListProducts",
                                   new { page = page }),
-                                  new PagedListRenderOptions
-                                       {
+                                  new PagedListRenderOptions { 
                                       LinkToFirstPageFormat = "اولین",
                                       LinkToPreviousPageFormat = "قبلی",
-                                      LinkToNextPageFormat = "بعدی",
-                                      LinkToLastPageFormat = "آخرین",
-                                     MaximumPageNumbersToDisplay = 4
+                                      LinkToNextPageFormat = "بعدی", 
+                                      LinkToLastPageFormat = "آخرین" ,
+                                     MaximumPageNumbersToDisplay=4
                                   }
              )
                 <div id="MoreInfoDiv">
@@ -130,89 +127,84 @@
                 </div>
                 <!--=========ButtonInfoProducts================================================================-->
                 @*<div align="center" class="buttoninfoProducts">
-                        <span id="moreInfoButton" class="btn ">نمایش بیشتر...</span>
-                    </div>*@
+            <span id="moreInfoButton" class="btn ">نمایش بیشتر...</span>
+        </div>*@
                 <div id="ProgressDiv" align="center" style="display: none">
                     <br />
                     <img src="@Url.Content("~/Content/img/loadingAnimation.gif")" alt="loading..." />
                 </div>
 
             </div>
-        </div>
     </div>
+</div>
 
-    @section scripts
+@section scripts
 {
 
-        <script src="~/Scripts/jquery.InfiniteScroll.js"></script>
+    <script src="~/Scripts/jquery.InfiniteScroll.js"></script>
 
-        @*<script type="text/javascript">
-                $(document).ready(function () {
-                    $("#moreInfoButton").InfiniteScroll({
-                        moreInfoDiv: '#MoreInfoDiv',
-                        progressDiv: '#ProgressDiv',
-                        loadInfoUrl: '/Product/ShowInfoProducts?page='+ @(pagecurrent++)+'&groupId='+@(groupId) ,
-                        loginUrl: '/login',
-                        errorHandler: function () {
-                            alert('خطایی رخ داده است');
-                        },
-                        completeHandler: function () {
-                            // اگر قرار است روی اطلاعات نمایش داده شده پردازش ثانوی صورت گیرد
-                        },
-                        noMoreInfoHandler: function () {
-                            alert('اطلاعات بیشتری یافت نشد');
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                $("#moreInfoButton").InfiniteScroll({
+                    moreInfoDiv: '#MoreInfoDiv',
+                    progressDiv: '#ProgressDiv',
+                    loadInfoUrl: '/Product/ShowInfoProducts?page='+ @(pagecurrent++)+'&groupId='+@(groupId) ,
+                    loginUrl: '/login',
+                    errorHandler: function () {
+                        alert('خطایی رخ داده است');
+                    },
+                    completeHandler: function () {
+                        // اگر قرار است روی اطلاعات نمایش داده شده پردازش ثانوی صورت گیرد
+                    },
+                    noMoreInfoHandler: function () {
+                        alert('اطلاعات بیشتری یافت نشد');
 
-                        }
-                    });
+                    }
                 });
-            </script>*@
-        @*<script>
+            });
+        </script>*@
+    @*<script>
 
-                var pageindex = 2;
+        var pageindex = 2;
 
-                var NoMoredata = false;
+        var NoMoredata = false;
 
-                var inProgress = false;
+        var inProgress = false;
 
-                $(window).scroll(function () {
+        $(window).scroll(function () {
 
-                    if ($(window).scrollTop() >400 && !NoMoredata && !inProgress) {
+            if ($(window).scrollTop() >400 && !NoMoredata && !inProgress) {
 
 
 
-                        inProgress = true;
+                inProgress = true;
 
-                        $("#ProgressDiv").show();
+                $("#ProgressDiv").show();
 
-                        $.post("@Url.Action("InfiniteScroll","Product")", { "pageindex": pageindex ,"groupId":@groupId},
+                $.post("@Url.Action("InfiniteScroll","Product")", { "pageindex": pageindex ,"groupId":@groupId},
 
-                            function (data) {
+                    function (data) {
 
-                                pageindex = pageindex + 1;
+                        pageindex = pageindex + 1;
 
-                                NoMoredata = data.NoMoredata;
+                        NoMoredata = data.NoMoredata;
 
-                                $("#_showInfoProducts").append(data.HTMLString);
+                        $("#_showInfoProducts").append(data.HTMLString);
 
-                                $("#ProgressDiv").hide();
+                        $("#ProgressDiv").hide();
 
-                                inProgress = false;
-
-                            }
-
-                            );
+                        inProgress = false;
 
                     }
 
-                });
+                    );
 
-            </script>*@
+            }
 
-    }
+        });
 
+    </script>*@
 
-
-
-
+}
 
 
