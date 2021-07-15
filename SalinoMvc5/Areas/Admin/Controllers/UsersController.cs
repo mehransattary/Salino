@@ -10,6 +10,7 @@ using Salino.DataLayer;
 using Salino.Models;
 using System.Web.Security;
 using PagedList;
+using System.Data.SqlClient;
 
 namespace SalinoMvc5.Areas.Admin.Controllers
 {
@@ -81,6 +82,7 @@ namespace SalinoMvc5.Areas.Admin.Controllers
             }
             else
             {
+
                 if (Session["roleId"] != null && typeuser == 0)
                 {
                     roleId = Convert.ToInt32(Session["roleId"]);
@@ -92,13 +94,23 @@ namespace SalinoMvc5.Areas.Admin.Controllers
                 else ViewBag.counter = ((page1 - 1) * 16) + 1;
                 if (roleId != 0)
                 {
-                    var resultWithRole = db.users.Where(x => x.RoleId == roleId )
-                                                       .Include(u => u.Roles).ToList();
+                    //var resultWithRole = db.users.Where(x => x.RoleId == roleId )
+                    //                                   .Include(u => u.Roles).ToList();
+
+                    //StoreProcedure   GetUserAsRoleId               
+                    var resultWithRole = db.users.SqlQuery("dbo.GetUserAsRoleId @roleId",new SqlParameter("roleId", roleId)).ToList();
+                                  
                     return View(resultWithRole.ToPagedList((int)page, 16));
                 }
                 else
                 {
-                    var users = db.users.Include(u => u.Roles).ToList();
+                    // var rs = db.users.SqlQuery("dbo.GetUsersWithRoles").ToList();
+                    //   var rs1 = db.users.SqlQuery("dbo.GetUsersWithRoles @fname",new SqlParameter("fname","mehran")).ToList();
+
+                    //StoreProcedure   GetUsersWithRoles                  
+                    var users = db.users.SqlQuery("dbo.GetUsersWithRoles").ToList();
+                    //var users = db.users.Include(u => u.Roles).ToList();
+
                     return View(users.ToPagedList((int)page1, 16));
                 }
         

@@ -145,6 +145,9 @@ namespace Salino.Models
 
 
         #endregion
+
+
+
         public ICollection<FactorDetail> FactorDetails { get; set; }
     }
     public enum StatusAllTypeFactorsEnum

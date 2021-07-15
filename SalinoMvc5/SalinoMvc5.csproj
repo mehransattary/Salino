@@ -236,7 +236,6 @@
     <Compile Include="Areas\Admin\Controllers\Products\FarbicTypeProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Offers\giftcardsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Images\ImageOffersController.cs" />
-    <Compile Include="Areas\Admin\Controllers\Offers\MajorShopsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Monasebats\MonasebatProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Monasebats\MonasebatsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Offers\OfferPricesController.cs" />
@@ -246,7 +245,6 @@
     <Compile Include="Areas\Admin\Controllers\Images\ImageMainsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Products\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
-    <Compile Include="Areas\Admin\Controllers\SendForMajorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SocialsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TicketsController.cs" />
@@ -8774,6 +8772,7 @@
     <Folder Include="Content\imgsocial\" />
     <Folder Include="Content\lib\fonts\" />
     <Folder Include="Content\sweetalert\" />
+    <Folder Include="DataLayer\StoreProcedure\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

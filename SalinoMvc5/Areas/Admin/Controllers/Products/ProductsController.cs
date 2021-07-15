@@ -41,7 +41,7 @@ namespace SalinoMvc5.Areas.Admin.Controllers
                 if (page == 1) ViewBag.counter = 1;
                 else ViewBag.counter = ((page1 - 1) * 14) + 1;
                 var products = db.Products.Include(p => p.GroupProduct).OrderByDescending(x=>x.CreateDateEnglish).ToList();
-             
+
                 return View(products.ToPagedList((int)page1, 14));
             }
 

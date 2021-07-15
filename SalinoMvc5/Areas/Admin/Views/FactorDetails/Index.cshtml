@@ -110,7 +110,15 @@
                                 }
 
                             </td>
-                            <td class="sorting_1">@db.groupProducts.Where(x=>x.Id==item.Product.GroupId).FirstOrDefault().GroupTitle</td>
+                            <td class="sorting_1">
+                                @{
+                                    int productId = item.ProductId;
+                                    var product = db.Products.Find(productId);
+                                    var group = db.groupProducts.Find(product.GroupId);
+                                }
+
+                                @(group?.GroupTitle??"")
+                            </td>
 
                             <td>
                                 @Html.DisplayFor(modelItem => item.ProductName)

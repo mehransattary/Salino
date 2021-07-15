@@ -11,6 +11,8 @@
     int counter = 1;
     var factorMain = ViewBag.FactorMain as FactorMain;
     int priceFirst = factorMain.Amount - factorMain.Discount;
+    int ostanId = Convert.ToInt32(db.users.FirstOrDefault(x => x.Id == factorMain.UserId).OstanId);
+
 }
 
 
@@ -110,27 +112,24 @@
                 <div class="col-sm-4 invoice-col" style="border-left: 1px solid;">
                     به
                     <address>
+
                         <strong>خریدار</strong><br>
-                        نام خریدار :  @db.users.Where(x => x.Id == factorMain.UserId).FirstOrDefault().UserName <br>
-                        خیابان :  @factorMain.AddressUser <br>
-                        تلفن: @factorMain.UserMobile <br>
-
-
-                        صندوق پستی: @db.users.Where(x => x.Id == factorMain.UserId).FirstOrDefault().PostalCode
-
-
-
+                        <span class="text-danger FontBig"> نام خریدار </span>  : @(factorMain.Username??  db.users.FirstOrDefault(x => x.Id == factorMain.UserId).UserName )   <br>
+                        <span class="text-danger FontBig"> موبایل </span> :  @factorMain.UserMobile <br>
+                        <span class="text-danger FontBig"> خیابان </span>     :  @factorMain.AddressUser <br>
+                        <span class="text-danger FontBig">    صندوق پستی </span>  :  @(factorMain.PostNumber?? db.users.FirstOrDefault(x => x.Id == factorMain.UserId).PostalCode) <br>
+                        <span class="text-danger FontBig"> استان </span>     :  @(factorMain.UserOstan ?? db.Ostans.FirstOrDefault(x => x.Id == ostanId).ostanname) <br>
+                        <span class="text-danger FontBig">   شهر </span>    :    @(factorMain.UserCity ?? db.users.FirstOrDefault(x => x.Id == factorMain.UserId).cityname) <br>
 
                     </address>
 
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                    <b>شماره فاکتور # @factorMain.FactorNumber</b><br>
-
-                    <b>شماره پرداخت  </b> @factorMain.PaymentNumber<br>
-                    <b>تاریخ پرداخت:</b> @factorMain.DateCreate<br>
-                    <b>ساعت پرداخت:</b> @factorMain.Time
+                    <b>   <span class="text-danger FontBig"> شماره فاکتور #  </span>     @factorMain.FactorNumber</b><br>
+                    <b>   <span class="text-danger FontBig"> شماره پرداخت   </span>  </b> @factorMain.PaymentNumber<br>
+                    <b> <span class="text-danger FontBig"> تاریخ پرداخت   </span></b> @factorMain.DateCreate<br>
+                    <b> <span class="text-danger FontBig"> ساعت پرداخت   </span></b> @factorMain.Time
                 </div>
                 <!-- /.col -->
             </div>

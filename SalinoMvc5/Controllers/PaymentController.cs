@@ -307,9 +307,6 @@ namespace SalinoMvc5.Controllers
                 return View();
             }
 
-
-
-
             //زرین پال
             else
             {
@@ -317,35 +314,23 @@ namespace SalinoMvc5.Controllers
                 if (user != null)
                 {
                     Session["gifcart"] =  Session["gifcart"];
-                    int senttypeId = Convert.ToInt32(TempData["sendtypeId"] == null ? 0 : TempData["sendtypeId"]);
                     int discount = Convert.ToInt32( Session["gifcart"] == null ? 0 :  Session["gifcart"]);
-                    int PriceHaml = 0;
-                    if (Session["shopcartMajor"] == null)
-                    {
+                    int PriceHaml = 0;              
+                    int PriceAll = Convert.ToInt32(TempData["sum"]);
 
-                        if (senttypeId != 0)
-                        {
-                            PriceHaml = Convert.ToInt32(db.TypeSendPosts.Where(x => x.Id == senttypeId).FirstOrDefault().PriceHaml);
-                        }
-                        else
-                        {
-                            PriceHaml = 0;
-                        }
+                    //نوع ارسال : TypeSendPostId
+                    int senttypeId = Convert.ToInt32(TempData["sendtypeId"] == null ? 0 : TempData["sendtypeId"]);
+                    if (senttypeId != 0)
+                    {
+                        PriceHaml = Convert.ToInt32(db.TypeSendPosts.Where(x => x.Id == senttypeId).FirstOrDefault().PriceHaml);
                     }
                     else
                     {
-
-                        if (senttypeId != 0)
-                        {
-                            PriceHaml = Convert.ToInt32(db.SendForMajors.Where(x => x.Id == senttypeId).FirstOrDefault().PriceHaml);
-                        }
-                        else
-                        {
-                            PriceHaml = 0;
-                        }
+                        PriceHaml = 0;
                     }
+                    //نام ارسال :  TypeSendPostName
+                    string typeSendPostName = db.TypeSendPosts.Where(x=>x.Id== senttypeId).FirstOrDefault()?.NameHaml;
 
-                    int PriceAll = Convert.ToInt32(TempData["sum"]);
                     #region Filling out part of FactorMain
                     FactorMain FactorMain = new FactorMain();
 
@@ -354,8 +339,11 @@ namespace SalinoMvc5.Controllers
                     FactorMain.UserId = user.Id;
                     FactorMain.Username = user.UserName;
                     FactorMain.UserMobile = user.Mobile;
+                    FactorMain.UserCodePosti = user.PostalCode;
                     FactorMain.Discount = discount == 0 ? 0 : db.giftcards.Where(x => x.Code == discount.ToString()).FirstOrDefault().Amount;
                     FactorMain.AddressUser = user.StreetAddress;
+                    FactorMain.UserOstan = (db.Ostans.FirstOrDefault(x=>x.Id== user.OstanId)?.ostanname)??"***" ;
+                    FactorMain.UserCity = user.cityname;
                     FactorMain.DateCreate = DateTime.Now.ToShortDateString().ToShamsi();
                     FactorMain.DateCreateDatetime = DateTime.Now;
                     FactorMain.Time = DateTime.Now.ToShortTimeString();
@@ -363,17 +351,8 @@ namespace SalinoMvc5.Controllers
                     FactorMain.Month = FactorMain.DateCreate.ConvertIntMonth();
                     FactorMain.Day = FactorMain.DateCreate.ConvertIntDay();
                     FactorMain.StatusAll = StatusAllTypeFactorsEnum.Pending;
-                    if (senttypeId != 0)
-                    {
-                        FactorMain.TypeSendPostId = Session["shopcartMajor"] == null ? db.TypeSendPosts.Where(x => x.Id == senttypeId).FirstOrDefault().Id : db.SendForMajors.Where(x => x.Id == senttypeId).FirstOrDefault().Id;
-                        FactorMain.TypeSendPostName = Session["shopcartMajor"] == null ? db.TypeSendPosts.Where(x => x.Id == senttypeId).FirstOrDefault().NameHaml : db.SendForMajors.Where(x => x.Id == senttypeId).FirstOrDefault().NameHaml;
-                    }
-                    else
-                    {
-                        FactorMain.TypeSendPostId = 1;
-                        FactorMain.TypeSendPostName = "0";
-                    }
-
+                    FactorMain.TypeSendPostId = senttypeId;
+                    FactorMain.TypeSendPostName = typeSendPostName??"بدون نام";
                     FactorMain.RoleId = user.RoleId;
                     db.FactorMains.Add(FactorMain);
                     db.SaveChanges();
@@ -603,8 +582,16 @@ namespace SalinoMvc5.Controllers
             // بررسی برگشت از درگاه
             if (Request.QueryString["saleOrderId"] != "" && Request.QueryString["Status"] != "" && Request.QueryString["Status"] != null && Request.QueryString["Authority"] != "" && Request.QueryString["Authority"] != null)
             {
+                #region اطلاعات دریافتی از درگاه
+                var _saleOrderId = Request.QueryString["saleOrderId"];
+                var _status = Request.QueryString["Status"];
+                var _authority = Request.QueryString["Authority"];
+           
+
+                #endregion
+
                 // بررسی وضعیت پرداخت
-                if (Request.QueryString["Status"].ToString().Equals("OK"))
+                if (_status=="OK")
                 {
                     int paymentId = Convert.ToInt32(saleOrderId);
 
@@ -614,7 +601,6 @@ namespace SalinoMvc5.Controllers
                     // شماره پیگیری
                     long refId = 0;
 
-                    System.Net.ServicePointManager.Expect100Continue = false;
 
                     // ایجاد یک شی از وب سرویس اتصال به درگاه زرین پال 
                     var zp = new SalinoMvc5.ServiceZarinPalTest.PaymentGatewayImplementationServicePortTypeClient();
@@ -624,7 +610,7 @@ namespace SalinoMvc5.Controllers
 
                     // وری فای کردن اطلاعات
                     // int status = zp.PaymentVerification("YOUR - ZARINPAL - MERCHANT - CODE", Request.QueryString["Authority"].ToString(), amount, out refId);
-                    int status = zp.PaymentVerification(merchantCode, Request.QueryString["Authority"].ToString(), amount, out refId);
+                    int status = zp.PaymentVerification(merchantCode, _authority.ToString(), amount, out refId);
 
                     // بررسی وضعیت
                     if (status == 100)
@@ -632,23 +618,19 @@ namespace SalinoMvc5.Controllers
                         // در این قسمت می توانید اطلاعات دریافتی را در دیتابیس ذخیره کنید
                         FactorMain FactorMain = db.FactorMains.Find(paymentId);
 
-
                         if (FactorMain != null)
                         {
-                            int TypeSendPostId = Convert.ToInt32(TempData["sendtypeId"]);
-
+                            #region Filling Continue FactorMains
                             FactorMain.PaymentNumber = refId.ToString();
-                            FactorMain.SaleReferenceId = Request.QueryString["Authority"].ToString();
+                            FactorMain.SaleReferenceId = _authority.ToString();
                             FactorMain.Paymentstatus = Convert.ToString(status);
                             FactorMain.IsPay = true;
-                            FactorMain.RoleId = User.Identity.IsAuthenticated ? db.users.Where(x => x.Mobile == User.Identity.Name).FirstOrDefault().RoleId : 0;
-                            FactorMain.TypeSendPostName =
-                            FactorMain.RoleId == 3 ?
-                            db.TypeSendPosts.Find(FactorMain.TypeSendPostId).NameHaml :
-                            db.SendForMajors.Find(FactorMain.TypeSendPostId).NameHaml;
-
+                            FactorMain.RRN = _authority.ToString(); 
+                            FactorMain.FactorNumber = db.FactorMains.Max(x=>x.FactorNumber)+1; 
                             db.Entry(FactorMain).State = EntityState.Modified;
                             db.SaveChanges();
+
+                            #endregion
 
                             //درصورت وارد کردن کد تخفیف در اینجا ان را حذف میکنیم
                             if (Session["gifcart"] != null)
@@ -716,10 +698,11 @@ namespace SalinoMvc5.Controllers
                                         Fdetail.DetailCount = item.Count;
                                         Fdetail.ProductId = item.ProductID;
                                         Fdetail.ProductName = proname.Name;
-                                        Fdetail.SumPrice = item.sumproduct;
+                                        Fdetail.SumPrice = (Fdetail.DetailPrice * item.Count);
                                         Fdetail.FactorMainId = FactorMain.Id;
                                         Fdetail.FarbicTypeId = item.FarbictypeId;
                                         Fdetail.FarbicTypeName = db.FarbicTypes.Find(item.FarbictypeId).tiltle;
+                                     
                                         db.FactorDetails.Add(Fdetail);
                                     }
                                     db.SaveChanges();
@@ -781,8 +764,6 @@ namespace SalinoMvc5.Controllers
                         ViewBag.Image = "~/Content/Images/notaccept.png";
                     }
                 }
-
-
 
                 else
                 {
