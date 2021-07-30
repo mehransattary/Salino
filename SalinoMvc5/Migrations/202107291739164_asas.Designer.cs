@@ -7,13 +7,13 @@ namespace SalinoMvc5.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class init : IMigrationMetadata
+    public sealed partial class asas : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(asas));
         
         string IMigrationMetadata.Id
         {
-            get { return "202106241401371_init"; }
+            get { return "202107291739164_asas"; }
         }
         
         string IMigrationMetadata.Source

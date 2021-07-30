@@ -133,12 +133,14 @@ namespace SalinoMvc5.Controllers
      
             return View(result.ToPagedList((int)page, 4));
         }
+
         public ActionResult FactorDetailShow(int? id, int? page = 1)
         {
             if(id!=null)
             {
                 ViewBag.pagecurrent = page == 1 ? 1 : 1 + 4;
                 var result = db.FactorDetails.Where(x => x.FactorMainId== id).ToList();
+                
                 ViewBag.ShomareFactor = db.FactorMains.Find(id).SaleReferenceId;         
                 return View(result.ToPagedList((int)page,4));
             }
@@ -148,7 +150,18 @@ namespace SalinoMvc5.Controllers
             }
         
         }
-
+        public ActionResult DetailFactorMain(int? id)
+        {
+            if (id != null)
+            {               
+                var result = db.FactorMains.FirstOrDefault(x => x.Id == id);               
+                return View(result);
+            }
+            else
+            {
+                return View();
+            }
+        }
         #endregion
 
         #region Tickets
@@ -198,6 +211,7 @@ namespace SalinoMvc5.Controllers
      
         }
         [Authorize(Roles = "User2,User3,User1")]
+
         [HttpGet]
         public ActionResult TicketsEdit(int? id)
         {
@@ -223,6 +237,7 @@ namespace SalinoMvc5.Controllers
         }
 
         #endregion
+
         #region Report
         public ActionResult ReportFactors(int? id)
         {

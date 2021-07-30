@@ -33,6 +33,7 @@
         @Html.HiddenFor(x => x.ImgMain)
         @Html.HiddenFor(x => x.ImgMainMob)
         @Html.HiddenFor(x => x.CreateDateEnglish)
+        <input hidden name="CreateDateEnglish"value="@DateTime.Now"/>
         <div class="form-horizontal">
             <h4>ویرایش محصول @Model.Name</h4>
             <hr />

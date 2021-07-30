@@ -305,13 +305,9 @@
     <Compile Include="DataLayer\Models\Models\Products\Product.cs" />
     <Compile Include="DataLayer\Models\Models\Users\Role.cs" />
     <Compile Include="DataLayer\Models\Models\Users\User.cs" />
-    <Compile Include="Migrations\202106241401371_init.cs" />
-    <Compile Include="Migrations\202106241401371_init.Designer.cs">
-      <DependentUpon>202106241401371_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106241448488_updateuser.cs" />
-    <Compile Include="Migrations\202106241448488_updateuser.Designer.cs">
-      <DependentUpon>202106241448488_updateuser.cs</DependentUpon>
+    <Compile Include="Migrations\202107291739164_asas.cs" />
+    <Compile Include="Migrations\202107291739164_asas.Designer.cs">
+      <DependentUpon>202107291739164_asas.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -8814,11 +8810,8 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202106241401371_init.resx">
-      <DependentUpon>202106241401371_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106241448488_updateuser.resx">
-      <DependentUpon>202106241448488_updateuser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107291739164_asas.resx">
+      <DependentUpon>202107291739164_asas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

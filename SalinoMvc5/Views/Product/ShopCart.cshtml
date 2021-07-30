@@ -10,6 +10,7 @@
     List<ShopCartItem> ShopCartItem = Session["shopcart"] as List<ShopCartItem>;
     List<AllShopCart> AllShopCart = Session["AllShopCart"] as List<AllShopCart>;
     int SumAllPrices = 0;
+
     int countProduct = 0;
     var senprice = db.SendPrices.OrderByDescending(x => x.Id).FirstOrDefault();
 
@@ -211,28 +212,28 @@
                                 }
                                 else
                                 {
-                        <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
-                                v-on:change="ChangePriceSenTyprprice(this.value)">
-                            <option disabled value="">انتخاب کنید....</option>
-                            @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
-                            {
-                                <option value="@item.Id">@item.NameHaml</option>
-                            }
-                        </select>
+                                    <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
+                                            v-on:change="ChangePriceSenTyprprice(this.value)">
+                                        <option disabled value="">انتخاب کنید....</option>
+                                        @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
+                                        {
+                                            <option value="@item.Id">@item.NameHaml</option>
+                                        }
+                                    </select>
 
                                 }
                             }
                             else
                             {
-                        <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
-                                v-on:change="ChangePriceSenTyprprice(this.value)">
+                                    <select v-model="sendtypeId" id="typeSendpost" name="typeSendpost" class="form-control typeSendpost"
+                                            v-on:change="ChangePriceSenTyprprice(this.value)">
 
-                            <option disabled value="">انتخاب کنید....</option>
-                            @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
-                            {
-                                <option value="@item.Id">@item.NameHaml</option>
-                            }
-                        </select>
+                                        <option disabled value="">انتخاب کنید....</option>
+                                        @foreach (var item in db.TypeSendPosts.Where(x => x.PriceHaml != "0").ToList())
+                                        {
+                                            <option value="@item.Id">@item.NameHaml</option>
+                                        }
+                                    </select>
                             }
 
 
@@ -504,7 +505,7 @@
 
                     @*<a href="#" class="cart-button">Continue</a>*@
 
-                <form action="/Payment/Payment">
+                <form action="/Payment/Payment" method="post">
                     <input hidden v-model="SumAllPrices" value="SumAllPrices" name="sumAllPrices">
                     <input hidden value="@countProduct" name="countProduct">
                     <input hidden v-model="gifcartinput" value="gifcartinput" name="gifcart">

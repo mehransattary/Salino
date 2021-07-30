@@ -96,6 +96,7 @@
                                                 </tr>
                                                 @foreach (var item in Model)
                                                 {
+                                                    var product = db.Products.FirstOrDefault(x=>x.Id==item.ProductId);
                                                     <tr role="row" class="table-striped table-hover">
                                                         <td class="sorting_1">@counter</td>
                                                         <td>
@@ -112,7 +113,11 @@
                                                             @db.Products.Find(item.ProductId).CodeKala
                                                         </td>
                                                         <td>
-                                                            @db.groupProducts.Where(x => x.Id == item.Product.GroupId).FirstOrDefault().GroupTitle
+                                                            @if (db.groupProducts.FirstOrDefault(x => x.Id == product.GroupId) != null)
+                                                            {
+                                                                <p> @db.groupProducts.FirstOrDefault(x => x.Id == product.GroupId).GroupTitle</p>
+                                                            }
+
                                                         </td>
                                                         <td>
                                                             @Html.DisplayFor(modelItem => item.ProductName)

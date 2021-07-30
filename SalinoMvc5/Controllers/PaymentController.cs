@@ -24,6 +24,27 @@ namespace SalinoMvc5.Controllers
 
         public ActionResult Payment(string gifcart, string countProduct, string sumAllPrices, string sendtypeId)
         {
+            var SumAllPrices_Without_SendPrice =Convert.ToInt32( Session["SumAllPrices"].ToString());
+            if(sendtypeId!="")
+            {
+                int _sendTypeId = int.Parse(sendtypeId);
+                var PriceHaml = db.TypeSendPosts.FirstOrDefault(x => x.Id == _sendTypeId)?.PriceHaml;
+                if (PriceHaml != null)
+                {
+                    sumAllPrices = ((SumAllPrices_Without_SendPrice) + int.Parse(PriceHaml)).ToString();
+                }
+                else
+                {
+                    return View("/");
+                }
+            }
+            else
+            {                
+                sumAllPrices = (SumAllPrices_Without_SendPrice).ToString() ;               
+            }
+
+
+          
             if (User.Identity.IsAuthenticated)
             {
                 var user = db.users.Where(x => x.Mobile == User.Identity.Name).FirstOrDefault();
@@ -111,7 +132,7 @@ namespace SalinoMvc5.Controllers
             }
             else
             {
-                return View("login", "User");
+                return Redirect("/Account/login");
             }
 
         }
@@ -123,7 +144,34 @@ namespace SalinoMvc5.Controllers
         // GET: Home
         public ActionResult Index(string SumAllPrices = "")
         {
-            int senttypeId = Convert.ToInt32(TempData["sendtypeId"]);
+            int senttypeId = 0;
+            if (TempData["sendtypeId"]!=null)
+            {
+                 senttypeId = Convert.ToInt32(TempData["sendtypeId"]);
+                if(senttypeId!=0)
+                {
+                    var SumAllPrices_Without_SendPrice = Convert.ToInt32(Session["SumAllPrices"].ToString());
+                    int _sendTypeId = senttypeId;
+                    var PriceHaml = db.TypeSendPosts.FirstOrDefault(x => x.Id == _sendTypeId)?.PriceHaml;
+
+                    if (PriceHaml != null)
+                    {
+                        SumAllPrices = ((SumAllPrices_Without_SendPrice) + int.Parse(PriceHaml)).ToString();
+                    }
+                }
+                else
+                {
+                    var SumAllPrices_Without_SendPrice = Convert.ToInt32(Session["SumAllPrices"].ToString());                 
+                     SumAllPrices = (SumAllPrices_Without_SendPrice).ToString() ;                 
+                }
+              
+            }
+            else
+            {
+                var SumAllPrices_Without_SendPrice = Convert.ToInt32(Session["SumAllPrices"].ToString());
+                SumAllPrices = (SumAllPrices_Without_SendPrice).ToString();
+            }
+          
 
             ViewBag.sum = Convert.ToInt32(SumAllPrices);
             TempData["sum"] = ViewBag.sum;
@@ -463,7 +511,7 @@ namespace SalinoMvc5.Controllers
 
             try
             {
-               
+                #region parameters
                 int paymentId = Convert.ToInt32(factormainId);
                 var token = Convert.ToInt64(Request.Form["Token"]);
                 var orderId = Convert.ToInt64(Request.Form["OrderId"]);
@@ -473,8 +521,9 @@ namespace SalinoMvc5.Controllers
                 var amountAsString = Request.Form["Amount"]; //amount is formatted as a currency string
                 var DiscountAmount = Request.Form["SwAmount"];
                 var cardNumberHashed = Request.Form["HashCardNumber"];
-                long amount;
-                bool amountParseWasSucceed = long.TryParse(amountAsString, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.CurrentCulture, out amount);
+                var amount = Convert.ToInt32(amountAsString);
+                #endregion
+
 
 
                 ViewBag.paymentId = paymentId;
@@ -492,23 +541,52 @@ namespace SalinoMvc5.Controllers
                         FactorMain FactorMain = db.FactorMains.Find(factormainId);
                         if (FactorMain != null)
                         {
-                         
-                            int TypeSendPostId = Convert.ToInt32(Session["sendtypeId"]);                       
-                            
+                            #region Filling Continue FactorMains
                             FactorMain.Paymentstatus = "100";
                             FactorMain.IsPay = true;
                             FactorMain.StatusAll = StatusAllTypeFactorsEnum.Pending;
-                            FactorMain.FactorNumber = FactorMain.FactorNumber+1;
+                            FactorMain.FactorNumber = FactorMain.FactorNumber + 1;
                             FactorMain.PaymentNumber = terminalNumber.ToString();
                             FactorMain.RRN = rrn.ToString();
                             FactorMain.CardNumberMasked = cardNumberHashed.ToString();
 
-                            ViewBag.PaymentNumber = terminalNumber.ToString();
-                            ViewBag.RRN= rrn.ToString();
-                      
-
                             db.Entry(FactorMain).State = EntityState.Modified;
                             db.SaveChanges();
+
+                            #endregion                       
+
+                            #region FillFactorDetails
+                            List<ShopCartItem> ShopCartItem = Session["shopcart"] as List<ShopCartItem>;
+                            if (ShopCartItem != null)
+                            {
+                                foreach (var item in ShopCartItem)
+                                {
+                                    var proname = db.Products.Where(x => x.Id == item.ProductID).FirstOrDefault();
+                                    FactorDetail Fdetail = new FactorDetail();
+                                    Fdetail.FactorMainId = FactorMain.Id;
+                                    Fdetail.DetailPrice = Convert.ToInt32(db.FarbicTypes.Find(item.FarbictypeId).PriceMain);
+                                    Fdetail.DetailCount = item.Count;
+                                    Fdetail.ProductId = item.ProductID;
+                                    Fdetail.ProductName = proname.Name;
+                                    Fdetail.SumPrice = (Fdetail.DetailPrice * item.Count);
+                                    Fdetail.FactorMainId = FactorMain.Id;
+                                    Fdetail.FarbicTypeId = item.FarbictypeId;
+                                    Fdetail.FarbicTypeName = db.FarbicTypes.Find(item.FarbictypeId).tiltle;
+
+                                    db.FactorDetails.Add(Fdetail);
+                                }
+                                db.SaveChanges();
+
+                            }
+                            #endregion
+
+                            //شماره پرداخت  
+                            ViewBag.SaleReferenceId = Request.QueryString["Authority"].ToString();
+                            //شماره پیگیری
+                            ViewBag.PaymentNumber = terminalNumber.ToString();
+                            ViewBag.Message = ZarinpalResult.Status(status.ToString());
+
+                            ViewBag.RRN = rrn.ToString();
 
                             //درصورت وارد کردن کد تخفیف در اینجا ان را حذف میکنیم
                             if (Session["gifcart"] != null)
@@ -538,28 +616,47 @@ namespace SalinoMvc5.Controllers
                             ViewBag.Message = "موفق";
                         }
                         else
-                        {                        
+                        {
+                            // در این قسمت می توانید اطلاعات دریافتی را در دیتابیس ذخیره کنید
+                            FactorMain factorMain = db.FactorMains.Find(paymentId);
+
+                            if (factorMain != null)
+                            {
+                                factorMain.PaymentNumber = "0";
+                                factorMain.SaleReferenceId = Request.QueryString["Authority"].ToString();
+                                factorMain.Paymentstatus = Convert.ToString(status);
+                                db.Entry(factorMain).State = EntityState.Modified;
+                                db.SaveChanges();
+
+                            }
+                            //شماره پرداخت                                          
+                            ViewBag.SaleReferenceId = "**************";
+                            //شماره پیگیری
+                            ViewBag.PaymentNumber = terminalNumber.ToString();
+                            ViewBag.Message = ZarinpalResult.Status(status.ToString());
                             ViewBag.Message = "ناموفق";
                         }
 
                     }
                     else
                     {
-                        int paymentId1 = Convert.ToInt32(orderId);
+                        // در این قسمت می توانید اطلاعات دریافتی را در دیتابیس ذخیره کنید
+                        FactorMain factorMain = db.FactorMains.Find(paymentId);
 
-                        FactorMain FactorMain = db.FactorMains.Find(paymentId1);
-
-                        if (FactorMain != null)
+                        if (factorMain != null)
                         {
-                            FactorMain.PaymentNumber = "0";
-                            FactorMain.SaleReferenceId = Request.QueryString["Authority"].ToString();
-                            FactorMain.Paymentstatus = Request.QueryString["Status"].ToString();
-
-                            db.Entry(FactorMain).State = EntityState.Modified;
+                            factorMain.PaymentNumber = "0";
+                            factorMain.SaleReferenceId = Request.QueryString["Authority"].ToString();
+                            factorMain.Paymentstatus = Convert.ToString(status);
+                            db.Entry(factorMain).State = EntityState.Modified;
                             db.SaveChanges();
 
                         }
-                        ViewBag.Message = "ناموفق";
+                        //شماره پرداخت                                          
+                        ViewBag.SaleReferenceId = "**************";
+                        //شماره پیگیری
+                        ViewBag.PaymentNumber = terminalNumber.ToString();
+                        ViewBag.Message = ZarinpalResult.Status(status.ToString());
                     }
                 }
 

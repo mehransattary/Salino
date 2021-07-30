@@ -417,7 +417,11 @@
                                 }
                                 else
                                 {
-                                    <a target="_blank" href="/Payment/Index/?SumAllPrices=@TempData["sumAllPrices"].ToString()" id="btnrefresh" class="btn btn-info btn-block btnrefresh" style="font-size: medium;font-family: IRANSans;"> پرداخت  <i class="fa fa-angle-double-left"></i></a>
+                                    <form action="/Payment/Index/"method="get">
+                                        <input hidden value="@TempData["sumAllPrices"].ToString()"name="SumAllPrices"/>
+                                        <input type="submit"class="btn btn-info btn-block btnrefresh" style="font-size: medium;font-family: IRANSans;" value="پرداخت"/>
+                                    </form>
+                                    @*<a target="_blank" href="/Payment/Index/?SumAllPrices=@TempData["sumAllPrices"].ToString()" id="btnrefresh" class="btn btn-info btn-block btnrefresh" style="font-size: medium;font-family: IRANSans;"> پرداخت  <i class="fa fa-angle-double-left"></i></a>*@
 
                                 }
 
